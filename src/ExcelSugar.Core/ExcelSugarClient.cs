@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace ExcelSugar.Core
 {
-    public class OemClient : IOemClient
+    public class ExcelSugarClient : IExcelSugarClient
     {
         public static Func<OemConfig,IOemProvider> TestTempProviderFun;
 
         private OemConfig Config { get; set; }
-        public OemClient(OemConfig config)
+        public ExcelSugarClient(OemConfig config)
         {
             Config = config;
         }

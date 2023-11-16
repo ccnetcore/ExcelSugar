@@ -18,10 +18,10 @@ namespace ExcelSugar.Npoi.Test
         public async Task Test1()
         {
             _output.WriteLine("这是一条测试消息。");
-            OemClient.TestTempProviderFun = (config) => new NpoiOemProvider(config);
+            ExcelSugarClient.TestTempProviderFun = (config) => new NpoiOemProvider(config);
 
 
-            IOemClient oemClient = new OemClient(new OemConfig { Path = "../../../Test.xlsx" });
+            IExcelSugarClient oemClient = new ExcelSugarClient(new OemConfig { Path = "../../../Test.xlsx" });
 
             var sss = new List<TestModel> {
                 new TestModel { Description = "123", Name = "123" },

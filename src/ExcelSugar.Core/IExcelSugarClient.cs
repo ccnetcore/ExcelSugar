@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExcelSugar.Core
 {
-    public interface IOemClient
+    public interface IExcelSugarClient
     {
         IOemExportable<T> Exportable<T>(IEnumerable<T> expObj);
         IOemQueryable<T> Queryable<T>();
