@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ExcelSugar.Core;
+using ExcelSugar.Core.Extensions;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
@@ -28,8 +31,6 @@ namespace ExcelSugar.Npoi
             return Task.FromResult(1);
         }
 
-
-
         /// <summary>
         /// 导出excel
         /// </summary>
@@ -38,21 +39,20 @@ namespace ExcelSugar.Npoi
         /// <param name="filePath"></param>
         private void Export<T>(List<T> entityList, string filePath)
         {
-            var properties = typeof(T).GetProperties().Where(x => x.GetCustomAttribute<DisplayNameAttribute>() is not null).Where(x => x.GetGetMethod().IsPublic).ToList();
+            var properties = typeof(T).GetValidProperties();
             // 创建工作簿
             IWorkbook workbook = new XSSFWorkbook();
 
-            var sheetName= typeof(T).GetCustomAttribute<SugarSheetAttribute>()?.SheetName;
-            var sheetReplaceName = sheetName ?? typeof(T).Name;
+            var sheetName = typeof(T).GetSheetNameFromType();
             // 创建工作表
-            ISheet sheet = workbook.CreateSheet(sheetReplaceName);
+            ISheet sheet = workbook.CreateSheet(sheetName);
 
 
             // 写入表头
             IRow headerRow = sheet.CreateRow(0);
             for (int j = 0; j < properties.Count(); j++)
             {
-                headerRow.CreateCell(j).SetCellValue(properties[j].GetCustomAttribute<DisplayNameAttribute>()!.DisplayName);
+                headerRow.CreateCell(j).SetCellValue(properties[j].GetCustomAttribute<SugarHeadAttribute>()!.DisplayName);
             }
 
             // 写入数据
@@ -63,9 +63,9 @@ namespace ExcelSugar.Npoi
                 for (int j = 0; j < properties.Count(); j++)
                 {
                     var currentPropertiy = properties[j];
-
+                    var cellStr =_config.CeellValueConverter.PropertyToCell(currentPropertiy.GetValue(currentEntity));
                     //只处理简单类型
-                    dataRow.CreateCell(j).SetCellValue(JsonSerializer.Serialize(currentPropertiy.GetValue(currentEntity)).TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray()));
+                    dataRow.CreateCell(j).SetCellValue(cellStr);
                 }
             }
 

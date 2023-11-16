@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using ExcelSugar.Core;
+using ExcelSugar.Core.Extensions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
@@ -47,17 +48,10 @@ namespace ExcelSugar.Npoi
         /// <returns></returns>
         private List<T> Import<T>(string filePath)
         {
-            Type listType = typeof(List<>); // 获取 List<> 的类型
-
-            Type typeArg = typeof(T); // 指定 List<T> 中的 T 的类型
-            Type constructedType = listType.MakeGenericType(typeArg); // 构造泛型类型
-
-            List<T> result = Activator.CreateInstance(constructedType) as List<T>; // 创建 List<T> 的实例
-
+            List<T> result = ReflectionExtensions.CreateListObjct<T>();
 
             Dictionary<int, PropertyInfo> propHas = new Dictionary<int, PropertyInfo>();
-            var properties = typeof(T).GetProperties().Where(x => x.GetCustomAttribute<DisplayNameAttribute>() is not null).Where(x => x.GetGetMethod().IsPublic).ToList();
-
+            var properties = typeof(T).GetValidProperties();
 
             // 创建文件流
             using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
@@ -65,10 +59,9 @@ namespace ExcelSugar.Npoi
                 // 创建工作簿
                 IWorkbook workbook = new XSSFWorkbook(fileStream);
 
-                var sheetName = typeof(T).GetCustomAttribute<SugarSheetAttribute>()?.SheetName;
-                var sheetReplaceName = sheetName ?? typeof(T).Name;
+                var sheetName = typeof(T).GetSheetNameFromType();
                 // 选择第一个工作表
-                ISheet sheet = workbook.GetSheet(sheetReplaceName);
+                ISheet sheet = workbook.GetSheet(sheetName);
 
                 //获取表头
                 IRow headerRow = sheet.GetRow(0);
@@ -78,7 +71,7 @@ namespace ExcelSugar.Npoi
                 {
                     // 获取单元格的值
                     ICell cell = headerRow.GetCell(col);
-                    var property = properties.Where(x => x.GetCustomAttribute<DisplayNameAttribute>().DisplayName == cell.StringCellValue).FirstOrDefault();
+                    var property = properties.Where(x => x.GetCustomAttribute<SugarHeadAttribute>().DisplayName == cell.StringCellValue).FirstOrDefault();
                     if (property is not null && !propHas.Values.Contains(property))
                     {
                         propHas[col] = property;
@@ -90,17 +83,16 @@ namespace ExcelSugar.Npoi
                 {
                     //一行一个对象
                     IRow currentRow = sheet.GetRow(row);
-                    var currentResult = (T)Activator.CreateInstance(typeArg);
+                    var currentResult = ReflectionExtensions.CreateInstance<T>();
                     // 遍历列
                     for (int col = 0; col < currentRow.LastCellNum; col++)
                     {
                         // 获取单元格的值
                         ICell cell = currentRow.GetCell(col);
                         string? cellValue = cell.ToString();
-                        object value = cellValue.TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
 
-                        value = Convert.ChangeType(cellValue, propHas[col].PropertyType);
-
+                        //属性转换值
+                        object value = _config.CeellValueConverter.CellToProperty(cellValue, propHas[col].PropertyType);
 
                         propHas[col].SetValue(currentResult, value);
 

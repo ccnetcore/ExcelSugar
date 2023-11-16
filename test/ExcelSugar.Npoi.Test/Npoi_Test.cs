@@ -23,8 +23,10 @@ namespace ExcelSugar.Npoi.Test
 
             IOemClient oemClient = new OemClient(new OemConfig { Path = "../../../Test.xlsx" });
 
-            var sss = new List<TestModel> { new TestModel { Description = "123", Name = "123" }, new TestModel { Description = "3124", Name = "312412" } };
-
+            var sss = new List<TestModel> {
+                new TestModel { Description = "123", Name = "123" },
+                new TestModel { Description = "3124", Name = "312412" }
+            };
 
             await oemClient.Exportable(sss).ExecuteCommandAsync();
             var data = await oemClient.Queryable<TestModel>().ToListAsync();
@@ -38,9 +40,12 @@ namespace ExcelSugar.Npoi.Test
     [SugarSheet("≤‚ ‘")]
     class TestModel
     {
-        [DisplayName("–’√˚")]
+        [SugarHead("–’√˚")]
         public string Name { get; set; }
-        [DisplayName("√Ë ˆ")]
+        [SugarHead("√Ë ˆ")]
         public string Description { get; set; }
+
+        //[SugarHead("∂‘œÛ", IsJson = true)]
+        //public Dictionary<int, string> KKK { get; set; } = new Dictionary<int, string>();
     }
 }

@@ -9,5 +9,7 @@ namespace ExcelSugar.Core
     public class OemConfig
     {
         public string Path { get; set; }
+
+        public ICellValueConverter CeellValueConverter { get; set; } = new DefaultCellValueConverter();
     }
 }
