@@ -1,18 +1,15 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
-
-# Other files and folders
-.settings/
-
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+obj
+x64
+x86
+bin
+/Nupkgs
+/.vs
+/packages
+/Publish
+/Dotfuscated
+/Src/.vs
+/IF.BS.Bin
+/IF.CS.Bin
+IF.Bin
+/Server.Bin
+2023-2-24WebFirst正试版1.5.4
