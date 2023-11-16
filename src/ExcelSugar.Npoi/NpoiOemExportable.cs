@@ -41,8 +41,11 @@ namespace ExcelSugar.Npoi
             var properties = typeof(T).GetProperties().Where(x => x.GetCustomAttribute<DisplayNameAttribute>() is not null).Where(x => x.GetGetMethod().IsPublic).ToList();
             // 创建工作簿
             IWorkbook workbook = new XSSFWorkbook();
+
+            var sheetName= typeof(T).GetCustomAttribute<SugarSheetAttribute>()?.SheetName;
+            var sheetReplaceName = sheetName ?? typeof(T).Name;
             // 创建工作表
-            ISheet sheet = workbook.CreateSheet("sheet");
+            ISheet sheet = workbook.CreateSheet(sheetReplaceName);
 
 
             // 写入表头

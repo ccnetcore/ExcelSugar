@@ -65,8 +65,10 @@ namespace ExcelSugar.Npoi
                 // 创建工作簿
                 IWorkbook workbook = new XSSFWorkbook(fileStream);
 
+                var sheetName = typeof(T).GetCustomAttribute<SugarSheetAttribute>()?.SheetName;
+                var sheetReplaceName = sheetName ?? typeof(T).Name;
                 // 选择第一个工作表
-                ISheet sheet = workbook.GetSheetAt(0);
+                ISheet sheet = workbook.GetSheet(sheetReplaceName);
 
                 //获取表头
                 IRow headerRow = sheet.GetRow(0);

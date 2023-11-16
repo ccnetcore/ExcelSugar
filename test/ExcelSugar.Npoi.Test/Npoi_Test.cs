@@ -21,9 +21,11 @@ namespace ExcelSugar.Npoi.Test
             OemClient.TestTempProviderFun = (config) => new NpoiOemProvider(config);
 
 
-            IOemClient oemClient = new OemClient(new OemConfig { Path = "../../../Test.xlxs" });
+            IOemClient oemClient = new OemClient(new OemConfig { Path = "../../../Test.xlsx" });
 
             var sss = new List<TestModel> { new TestModel { Description = "123", Name = "123" }, new TestModel { Description = "3124", Name = "312412" } };
+
+
             await oemClient.Exportable(sss).ExecuteCommandAsync();
             var data = await oemClient.Queryable<TestModel>().ToListAsync();
 
@@ -32,6 +34,8 @@ namespace ExcelSugar.Npoi.Test
         }
     }
 
+
+    [SugarSheet("≤‚ ‘")]
     class TestModel
     {
         [DisplayName("–’√˚")]

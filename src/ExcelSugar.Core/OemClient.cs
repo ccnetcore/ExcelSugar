@@ -21,7 +21,7 @@ namespace ExcelSugar.Core
             return TestTempProviderFun.Invoke(Config);
         }
 
-
+        
         public IOemQueryable<T> Queryable<T>()
         {
             return Context.CreateQueryable<T>();
