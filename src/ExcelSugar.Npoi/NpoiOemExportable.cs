@@ -37,7 +37,7 @@ namespace ExcelSugar.Npoi
         /// <typeparam name="T"></typeparam>
         /// <param name="entityList"></param>
         /// <param name="filePath"></param>
-        private void Export<T>(List<T> entityList, string filePath)
+        private void Export(List<T> entityList, string filePath)
         {
             var properties = typeof(T).GetValidProperties();
             // 创建工作簿

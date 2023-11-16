@@ -28,7 +28,7 @@ namespace ExcelSugar.Npoi
 
         public Task<List<T>> ToListAsync()
         {
-            return Task.FromResult(Import<T>(_config.Path));
+            return Task.FromResult(Import(_config.Path));
         }
 
         public IOemQueryable<T> Where(Expression<Func<T, bool>> expression)
@@ -46,7 +46,7 @@ namespace ExcelSugar.Npoi
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        private List<T> Import<T>(string filePath)
+        private List<T> Import(string filePath)
         {
             List<T> result = ReflectionExtensions.CreateListObjct<T>();
 
@@ -92,7 +92,7 @@ namespace ExcelSugar.Npoi
                         string? cellValue = cell.ToString();
 
                         //属性转换值
-                        object value = _config.CeellValueConverter.CellToProperty(cellValue, propHas[col].PropertyType);
+                        object? value = _config.CeellValueConverter.CellToProperty(cellValue, propHas[col].PropertyType);
 
                         propHas[col].SetValue(currentResult, value);
 
