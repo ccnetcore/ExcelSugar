@@ -10,6 +10,8 @@ namespace ExcelSugar.Core
     {
         public string Path { get; set; }
 
-        public ICellValueConverter CeellValueConverter { get; set; } = new DefaultCellValueConverter();
+        public ICellValueConverter CellValueConverter { get; set; } = new DefaultCellValueConverter();
+
+        public ExcelHandlerType HandlerType { get; set; }
     }
 }

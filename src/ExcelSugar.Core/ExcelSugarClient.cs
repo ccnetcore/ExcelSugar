@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace ExcelSugar.Core
 {
     public class ExcelSugarClient : IExcelSugarClient
     {
-        public static Func<OemConfig,IOemProvider> TestTempProviderFun;
+        private IOemProvider Provider { get; set; }
+        private IOemProvider Context => GetProvider();
+        private IOemProvider GetProvider()
+        {
+            return Provider;
+        }
 
-        private OemConfig Config { get; set; }
+        private OemConfig Config { get; }
         public ExcelSugarClient(OemConfig config)
         {
             Config = config;
+            Init();
         }
 
-
-        private IOemProvider Context => GetProvider();
-
-        private IOemProvider GetProvider()
+        private void Init()
         {
-            return TestTempProviderFun.Invoke(Config);
+            var providerFactory = new ExcelHandlerProviderFactory(Config);
+            this.Provider = providerFactory.CreateOemProvider();
         }
 
-        
         public IOemQueryable<T> Queryable<T>()
         {
             return Context.CreateQueryable<T>();

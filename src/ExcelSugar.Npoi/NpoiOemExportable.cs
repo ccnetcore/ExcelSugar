@@ -19,10 +19,15 @@ namespace ExcelSugar.Npoi
     {
         private OemConfig _config;
         private IEnumerable<T> _expObjs;
+
         public NpoiOemExportable(OemConfig oemConfig, IEnumerable<T> expObj)
         {
             _config = oemConfig;
             _expObjs = expObj;
+        }
+        private IOemExportable<T> From(string excelPath)
+        {
+            return this;
         }
 
         public Task<int> ExecuteCommandAsync()
@@ -63,7 +68,7 @@ namespace ExcelSugar.Npoi
                 for (int j = 0; j < properties.Count(); j++)
                 {
                     var currentPropertiy = properties[j];
-                    var cellStr =_config.CeellValueConverter.PropertyToCell(currentPropertiy.GetValue(currentEntity));
+                    var cellStr = _config.CellValueConverter.PropertyToCell(currentPropertiy.GetValue(currentEntity));
                     //只处理简单类型
                     dataRow.CreateCell(j).SetCellValue(cellStr);
                 }
@@ -77,6 +82,7 @@ namespace ExcelSugar.Npoi
 
             workbook.Dispose();
         }
+
 
     }
 }

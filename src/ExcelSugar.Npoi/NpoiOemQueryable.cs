@@ -92,7 +92,7 @@ namespace ExcelSugar.Npoi
                         string? cellValue = cell.ToString();
 
                         //属性转换值
-                        object? value = _config.CeellValueConverter.CellToProperty(cellValue, propHas[col].PropertyType);
+                        object? value = _config.CellValueConverter.CellToProperty(cellValue, propHas[col].PropertyType);
 
                         propHas[col].SetValue(currentResult, value);
 
