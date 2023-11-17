@@ -27,9 +27,11 @@ namespace ExcelSugar.Npoi.Test
             };
 
             await oemClient.Exportable(sss).ExecuteCommandAsync();
+
+
             var data = await oemClient.Queryable<TestModel>().ToListAsync();
 
-
+          
             Assert.True(data.Any());
         }
     }
