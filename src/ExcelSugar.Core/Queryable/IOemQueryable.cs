@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace ExcelSugar.Core
+namespace ExcelSugar.Core.Queryable
 {
     public interface IOemQueryable<T>
     {

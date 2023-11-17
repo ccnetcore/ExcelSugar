@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using ExcelSugar.Core.Exportable;
+using ExcelSugar.Core.Queryable;
 
 namespace ExcelSugar.Core
 {
-    public class ExcelSugarClient : IExcelSugarClient
+    public class ExcelSugarClient : IExcelSugarClient, IDisposable
     {
+        private bool disposedValue;
+
         private IOemProvider Provider { get; set; }
         private IOemProvider Context => GetProvider();
         private IOemProvider GetProvider()
@@ -30,10 +34,14 @@ namespace ExcelSugar.Core
         {
             return Context.CreateQueryable<T>();
         }
-        public IOemExportable<T> Exportable<T>(IEnumerable<T> expObj)
+        public IOemExportable<T> Exportable<T>(IEnumerable<T>? expObj)
         {
             return Context.CreateExportable<T>(expObj);
         }
 
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }

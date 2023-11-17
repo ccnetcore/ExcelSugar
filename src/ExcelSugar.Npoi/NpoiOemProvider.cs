@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using ExcelSugar.Core;
+using ExcelSugar.Core.Exportable;
+using ExcelSugar.Core.Queryable;
 
 namespace ExcelSugar.Npoi
 {
@@ -15,7 +17,7 @@ namespace ExcelSugar.Npoi
             return new NpoiOemQueryable<T>(_oemConfig);
         }
 
-        public IOemExportable<T> CreateExportable<T>(IEnumerable<T> expObj)
+        public IOemExportable<T> CreateExportable<T>(IEnumerable<T>? expObj)
         {
             return new NpoiOemExportable<T>(_oemConfig, expObj);
         }

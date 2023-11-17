@@ -2,43 +2,32 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using ExcelSugar.Core;
 using ExcelSugar.Core.Extensions;
+using ExcelSugar.Core.Queryable;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 namespace ExcelSugar.Npoi
 {
-    public class NpoiOemQueryable<T> : IOemQueryable<T>
+    public class NpoiOemQueryable<T> : AbstractOemQueryable<T>
     {
-        private OemConfig _config;
-        public NpoiOemQueryable(OemConfig oemConfig)
+
+        public NpoiOemQueryable(OemConfig oemConfig) : base(oemConfig)
         {
-            _config = oemConfig;
         }
 
-        public Task<T> FirstAsync()
+        public override Task<T> FirstAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<T>> ToListAsync()
+        public override Task<List<T>> ToListAsync()
         {
             return Task.FromResult(Import(_config.Path));
         }
-
-        public IOemQueryable<T> Where(Expression<Func<T, bool>> expression)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
         /// <summary>
         /// 导入excel
         /// </summary>

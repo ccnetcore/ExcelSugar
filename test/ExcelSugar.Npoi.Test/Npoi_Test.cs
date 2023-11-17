@@ -2,6 +2,7 @@ using System.ComponentModel;
 using ExcelSugar.Core;
 using Xunit;
 using Xunit.Abstractions;
+using ExcelSugar.Core.Exportable;
 
 namespace ExcelSugar.Npoi.Test
 {
@@ -19,19 +20,32 @@ namespace ExcelSugar.Npoi.Test
         {
             _output.WriteLine("这是一条测试消息。");
 
-            IExcelSugarClient oemClient = new ExcelSugarClient(new OemConfig { Path = "../../../Test.xlsx", HandlerType= ExcelHandlerType.Npoi});
+            //创建客户端
+            IExcelSugarClient excelSugarClient = new ExcelSugarClient(new OemConfig { Path = "../../../Test3.xlsx", HandlerType = ExcelHandlerType.Npoi });
 
-            var sss = new List<TestModel> {
-                new TestModel { Description = "123", Name = "123" },
-                new TestModel { Description = "3124", Name = "312412" }
+            //创建实体
+            var entities = new List<TestModel> {
+                new TestModel { Description = "男的", Name = "张三" },
+                new TestModel { Description = "女的", Name = "李四" }
             };
 
-            await oemClient.Exportable(sss).ExecuteCommandAsync();
+            //导出：传入实体对象,返回excel文件
+            await excelSugarClient.Exportable(entities).ExecuteCommandAsync();
 
+            //导出：来自模板，传入实体对象,给一个from模板路径，根据模板的样式返回excel文件
+            await excelSugarClient.Exportable(entities).From("../../../Test.xlsx").ExecuteCommandAsync();
 
-            var data = await oemClient.Queryable<TestModel>().ToListAsync();
+            //导出：返回一个空模板
+            await excelSugarClient.Exportable("../../../Test.xlsx").ExecuteCommandAsync();
 
-          
+            //查询：从excel中查询，返回实体对象
+            var data = await excelSugarClient.Queryable<TestModel>().ToListAsync();
+
+            //查询：从excel中查询，包含条件，返回实体对象
+            var data2 = await excelSugarClient.Queryable<TestModel>().Where(x=>x.Name=="张三").ToListAsync();
+
+            //释放对象
+            excelSugarClient.Dispose();
             Assert.True(data.Any());
         }
     }
