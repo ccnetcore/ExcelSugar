@@ -21,13 +21,18 @@ namespace ExcelSugar.Npoi.Test
             _output.WriteLine("这是一条测试消息。");
 
             //创建客户端
-            IExcelSugarClient excelSugarClient = new ExcelSugarClient(new OemConfig { Path = "../../../Test3.xlsx", HandlerType = ExcelHandlerType.Npoi });
+            IExcelSugarClient excelSugarClient = new ExcelSugarClient(new OemConfig { Path = "../../../Test2.xlsx", HandlerType = ExcelHandlerType.Npoi });
 
             //创建实体
             var entities = new List<TestModel> {
                 new TestModel { Description = "男的", Name = "张三" },
                 new TestModel { Description = "女的", Name = "李四" }
             };
+            //查询：从excel中查询，包含条件，返回实体对象
+            var data3 = await excelSugarClient.Queryable<TestModel>().Where(x => x.Name == "张三").ToListAsync();
+            { 
+            }
+
 
             //导出：传入实体对象,返回excel文件
             await excelSugarClient.Exportable(entities).ExecuteCommandAsync();
