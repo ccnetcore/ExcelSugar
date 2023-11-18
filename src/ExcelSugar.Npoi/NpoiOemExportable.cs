@@ -29,7 +29,6 @@ namespace ExcelSugar.Npoi
                 {
                     ExportForNull(_config.Path, fromPath);
                 }
-
                 //代表存在模板
                 this.ExportForTemplate(_expObjs.ToList(), _config.Path, fromPath);
             }
