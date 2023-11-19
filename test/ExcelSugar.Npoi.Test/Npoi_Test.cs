@@ -13,73 +13,75 @@ namespace ExcelSugar.Npoi.Test
             _output = output;
 
         }
-       
+
 
         [Fact]
         public async Task Test1()
         {
-            //�����ͻ���
+
+            //创建客户�?
             IExcelSugarClient excelSugarClient = new ExcelSugarClient(new OemConfig { Path = "../../../Test3.xlsx", HandlerType = ExcelHandlerType.Npoi });
-            //����ʵ��
+            //创建实体
+
             var entities = new List<TestModel> {
-                new TestModel { Description = "111", Name = "222", DynamicModels=new List<DynamicModel>{ 
-                    new DynamicModel { DataCode="a1",DataName="����ͷ",DataValue=123},
-                new DynamicModel { DataCode="a2",DataName="����ͷ2",DataValue=456},
+                new TestModel { Description = "��ð�", Name = "222", DynamicModels=new List<DynamicModel>{
+                    new DynamicModel { DataCode="a1",DataName="测试�",DataValue=123},
+                new DynamicModel { DataCode="a2",DataName="测试�?",DataValue=456},
 
                 } },
                 new TestModel { Description = "333", Name = "444" ,DynamicModels=new List<DynamicModel>{
-                    
-                    new DynamicModel { DataCode="a2",DataName="����ͷ2",DataValue=2223},
-                 new DynamicModel { DataCode="a1",DataName="����ͷ",DataValue=33331},
+
+                    new DynamicModel { DataCode="a2",DataName="测试�?",DataValue=2223},
+                 new DynamicModel { DataCode="a1",DataName="测试�?",DataValue=33331},
 
                 } }
             };
-            //��ѯ����excel�в�ѯ����������������ʵ�����
-            var data3 = await excelSugarClient.Queryable<TestModel>().Where(x => x.Name == "����").ToListAsync();
-            { 
-            }
+            ////��ѯ����excel�в�ѯ����������������ʵ�����
+            //var data3 = await excelSugarClient.Queryable<TestModel>().Where(x => x.Name == "����").ToListAsync();
+            //{
+            //}
 
 
-            //����������ʵ�����,����excel�ļ�
+            //导出：传入实体对�?返回excel文件
             await excelSugarClient.Exportable(entities).ExecuteCommandAsync();
 
-            ////����������ģ�壬����ʵ�����,��һ��fromģ��·��������ģ�����ʽ����excel�ļ�
+            ////导出：来自模板，传入实体对象,给一个from模板路径，根据模板的样式返回excel文件
             //await excelSugarClient.Exportable(entities).From("../../../Test.xlsx").ExecuteCommandAsync();
 
-            ////����������һ����ģ��
+            ////导出：返回一个空模板
             //await excelSugarClient.Exportable("../../../Test.xlsx").ExecuteCommandAsync();
 
-            ////��ѯ����excel�в�ѯ������ʵ�����
+            ////查询：从excel中查询，返回实体对象
             //var data = await excelSugarClient.Queryable<TestModel>().ToListAsync();
 
-            ////��ѯ����excel�в�ѯ����������������ʵ�����
-            //var data2 = await excelSugarClient.Queryable<TestModel>().Where(x => x.Name == "����").ToListAsync();
+            ////查询：从excel中查询，包含条件，返回实体对�?
+            //var data2 = await excelSugarClient.Queryable<TestModel>().Where(x => x.Name == "张三").ToListAsync();
 
-            ////�ͷŶ���
+            ////释放对象
             //excelSugarClient.Dispose();
             //Assert.True(data.Any());
         }
     }
 
 
-    [SugarSheet("����")]
+    [SugarSheet("测试")]
     class TestModel
     {
-        [SugarHead("����")]
+        [SugarHead("姓名")]
         public string Name { get; set; }
-        [SugarHead("����")]
+        [SugarHead("描述")]
         public string Description { get; set; }
 
         /// <summary>
-        /// ������̬ͷ����
+        /// 包含动态头类型
         /// </summary>
         [SugarDynamicHead]
         public List<DynamicModel> DynamicModels { get; set; } = new List<DynamicModel>();
-        //[SugarHead("����", IsJson = true)]
+        //[SugarHead("对象", IsJson = true)]
         //public Dictionary<int, string> KKK { get; set; } = new Dictionary<int, string>();
     }
     /// <summary>
-    /// ��̬ͷ�����У�����Ҫ����code��value��name
+    /// 动态头类型中，必须要包含code、value、name
     /// </summary>
     class DynamicModel
     {
