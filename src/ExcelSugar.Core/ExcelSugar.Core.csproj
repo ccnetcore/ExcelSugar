@@ -3,7 +3,6 @@
 	<Import Project="../Builder.props" />
 
 
-
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="8.0.0" />
   </ItemGroup>

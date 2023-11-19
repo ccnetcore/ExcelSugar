@@ -28,7 +28,6 @@ namespace ExcelSugar.Npoi.Test
             var entities = new List<TestModel> {
                 new TestModel { Description = "男的", Name = "张三", DynamicModels=new List<DynamicModel>{
                     new DynamicModel { DataCode="height",DataName="身高",DataValue=188},
-                    new DynamicModel { DataCode="age",DataName="年龄",DataValue=35},
                 } },
                 new TestModel { Description = "女的", Name = "李四" ,DynamicModels=new List<DynamicModel>{
                     new DynamicModel { DataCode="height",DataName="身高",DataValue=168},

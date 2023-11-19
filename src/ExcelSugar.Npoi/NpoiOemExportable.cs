@@ -175,11 +175,13 @@ namespace ExcelSugar.Npoi
             //动态表头数据
             var dynamicHeadDataInfos = dynamicHeadHandler.DataHandler(dynamicHeadTypeInfo, entityList);
 
-            //动态表头长度
-            var dynamicHeadCount = dynamicHeadDataInfos.Count();
 
             //获取datacode、dataname的关系
             var dynamicHeadCodeAndNameList = dynamicHeadDataInfos.SelectMany(x => x.Select(y => new DynamicHeadDataInfo { DataCode = y.DataCode, DataName = y.DataName })).Distinct(new DataCodeComparer()).ToList();
+
+            //动态表头长度
+            var dynamicHeadCount = dynamicHeadCodeAndNameList.Count();
+
             // 列数与datacode的关系
             var dynamicHeadColAndCodeDic = new Dictionary<int, string>();
 

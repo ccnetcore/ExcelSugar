@@ -29,14 +29,17 @@ namespace ExcelSugar.Core.Exportable
                 var rowResult = new DynamicHeadDataRowInfo();
                 foreach (var modeItem in listData as IEnumerable)
                 {
-                
+
                     var result = new DynamicHeadDataInfo();
                     result.DataCode = dynamicHeadTypeInfo.Code.GetValue(modeItem).ToString();
                     result.DataName = dynamicHeadTypeInfo.Name.GetValue(modeItem).ToString();
                     result.DataValue = dynamicHeadTypeInfo.Value.GetValue(modeItem).ToString();
                     rowResult.Add(result);
                 }
+
                 results.Add(rowResult);
+
+
             }
             return results;
         }
