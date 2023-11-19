@@ -12,6 +12,7 @@ namespace ExcelSugar.Core
         { 
         
         }
+
         public SugarSheetAttribute(string sheetName)
         {
             SheetName=sheetName;

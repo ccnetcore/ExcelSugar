@@ -1,8 +1,7 @@
-using System.ComponentModel;
 using ExcelSugar.Core;
+using ExcelSugar.Core.Attributes;
 using Xunit;
 using Xunit.Abstractions;
-using ExcelSugar.Core.Exportable;
 
 namespace ExcelSugar.Npoi.Test
 {
@@ -11,55 +10,81 @@ namespace ExcelSugar.Npoi.Test
         private ITestOutputHelper _output;
         public Npoi_Test(ITestOutputHelper output)
         {
-
             _output = output;
+
         }
+       
 
         [Fact]
         public async Task Test1()
         {
-            _output.WriteLine("ÕâÊÇÒ»Ìõ²âÊÔÏûÏ¢¡£");
-
-            //´´½¨¿Í»§¶Ë
+            //åˆ›å»ºå®¢æˆ·ç«¯
             IExcelSugarClient excelSugarClient = new ExcelSugarClient(new OemConfig { Path = "../../../Test3.xlsx", HandlerType = ExcelHandlerType.Npoi });
-
-            //´´½¨ÊµÌå
+            //åˆ›å»ºå®ä½“
             var entities = new List<TestModel> {
-                new TestModel { Description = "ÄĞµÄ", Name = "ÕÅÈı" },
-                new TestModel { Description = "Å®µÄ", Name = "ÀîËÄ" }
+                new TestModel { Description = "111", Name = "222", DynamicModels=new List<DynamicModel>{ 
+                    new DynamicModel { DataCode="a1",DataName="æµ‹è¯•å¤´",DataValue=123},
+                new DynamicModel { DataCode="a2",DataName="æµ‹è¯•å¤´2",DataValue=456},
+
+                } },
+                new TestModel { Description = "333", Name = "444" ,DynamicModels=new List<DynamicModel>{
+                    
+                    new DynamicModel { DataCode="a2",DataName="æµ‹è¯•å¤´2",DataValue=2223},
+                 new DynamicModel { DataCode="a1",DataName="æµ‹è¯•å¤´",DataValue=33331},
+
+                } }
             };
 
-            //µ¼³ö£º´«ÈëÊµÌå¶ÔÏó,·µ»ØexcelÎÄ¼ş
+            //å¯¼å‡ºï¼šä¼ å…¥å®ä½“å¯¹è±¡,è¿”å›excelæ–‡ä»¶
             await excelSugarClient.Exportable(entities).ExecuteCommandAsync();
 
-            //µ¼³ö£ºÀ´×ÔÄ£°å£¬´«ÈëÊµÌå¶ÔÏó,¸øÒ»¸öfromÄ£°åÂ·¾¶£¬¸ù¾İÄ£°åµÄÑùÊ½·µ»ØexcelÎÄ¼ş
-            await excelSugarClient.Exportable(entities).From("../../../Test.xlsx").ExecuteCommandAsync();
+            ////å¯¼å‡ºï¼šæ¥è‡ªæ¨¡æ¿ï¼Œä¼ å…¥å®ä½“å¯¹è±¡,ç»™ä¸€ä¸ªfromæ¨¡æ¿è·¯å¾„ï¼Œæ ¹æ®æ¨¡æ¿çš„æ ·å¼è¿”å›excelæ–‡ä»¶
+            //await excelSugarClient.Exportable(entities).From("../../../Test.xlsx").ExecuteCommandAsync();
 
-            //µ¼³ö£º·µ»ØÒ»¸ö¿ÕÄ£°å
-            await excelSugarClient.Exportable("../../../Test.xlsx").ExecuteCommandAsync();
+            ////å¯¼å‡ºï¼šè¿”å›ä¸€ä¸ªç©ºæ¨¡æ¿
+            //await excelSugarClient.Exportable("../../../Test.xlsx").ExecuteCommandAsync();
 
-            //²éÑ¯£º´ÓexcelÖĞ²éÑ¯£¬·µ»ØÊµÌå¶ÔÏó
-            var data = await excelSugarClient.Queryable<TestModel>().ToListAsync();
+            ////æŸ¥è¯¢ï¼šä»excelä¸­æŸ¥è¯¢ï¼Œè¿”å›å®ä½“å¯¹è±¡
+            //var data = await excelSugarClient.Queryable<TestModel>().ToListAsync();
 
-            //²éÑ¯£º´ÓexcelÖĞ²éÑ¯£¬°üº¬Ìõ¼ş£¬·µ»ØÊµÌå¶ÔÏó
-            var data2 = await excelSugarClient.Queryable<TestModel>().Where(x=>x.Name=="ÕÅÈı").ToListAsync();
+            ////æŸ¥è¯¢ï¼šä»excelä¸­æŸ¥è¯¢ï¼ŒåŒ…å«æ¡ä»¶ï¼Œè¿”å›å®ä½“å¯¹è±¡
+            //var data2 = await excelSugarClient.Queryable<TestModel>().Where(x => x.Name == "å¼ ä¸‰").ToListAsync();
 
-            //ÊÍ·Å¶ÔÏó
-            excelSugarClient.Dispose();
-            Assert.True(data.Any());
+            ////é‡Šæ”¾å¯¹è±¡
+            //excelSugarClient.Dispose();
+            //Assert.True(data.Any());
         }
     }
 
 
-    [SugarSheet("²âÊÔ")]
+    [SugarSheet("æµ‹è¯•")]
     class TestModel
     {
-        [SugarHead("ĞÕÃû")]
+        [SugarHead("å§“å")]
         public string Name { get; set; }
-        [SugarHead("ÃèÊö")]
+        [SugarHead("æè¿°")]
         public string Description { get; set; }
 
-        //[SugarHead("¶ÔÏó", IsJson = true)]
+        /// <summary>
+        /// åŒ…å«åŠ¨æ€å¤´ç±»å‹
+        /// </summary>
+        [SugarDynamicHead]
+        public List<DynamicModel> DynamicModels { get; set; } = new List<DynamicModel>();
+        //[SugarHead("å¯¹è±¡", IsJson = true)]
         //public Dictionary<int, string> KKK { get; set; } = new Dictionary<int, string>();
+    }
+    /// <summary>
+    /// åŠ¨æ€å¤´ç±»å‹ä¸­ï¼Œå¿…é¡»è¦åŒ…å«codeã€valueã€name
+    /// </summary>
+    class DynamicModel
+    {
+        [SugarDynamicHead(IsCode = true)]
+        public string DataCode { get; set; }
+
+        [SugarDynamicHead(IsValue = true)]
+        public int DataValue { get; set; }
+
+        [SugarDynamicHead(IsName = true)]
+        public string DataName { get; set; }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using ExcelSugar.Core;
+using ExcelSugar.Core.Exportable;
 using ExcelSugar.Core.Extensions;
 using NPOI.SS.UserModel;
+using NPOI.Util.Collections;
 using NPOI.XSSF.UserModel;
 
 namespace ExcelSugar.Npoi
@@ -50,6 +53,13 @@ namespace ExcelSugar.Npoi
             File.Copy(filePath, templatePath);
         }
 
+        /// <summary>
+        /// 以模板进行导出
+        /// </summary>
+        /// <param name="entityList"></param>
+        /// <param name="filePath"></param>
+        /// <param name="templatePath"></param>
+        /// <exception cref="Exception"></exception>
         private void ExportForTemplate(List<T> entityList, string filePath, string templatePath)
         {
             var properties = typeof(T).GetValidProperties();
@@ -138,7 +148,7 @@ namespace ExcelSugar.Npoi
                     dataRow.CreateCell(j).SetCellValue(cellStr);
                 }
             }
-
+            HandlerForDynamicHead(entityList, sheet);
             // 保存文件
             using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
@@ -148,6 +158,49 @@ namespace ExcelSugar.Npoi
             workbook.Dispose();
         }
 
+
+        /// <summary>
+        /// 动态表头处理
+        /// </summary>
+        private void HandlerForDynamicHead(List<T> entityList, ISheet sheet)
+        {
+            var dynamicHeadHandler = new DynamicHeadHandler();
+            //动态表头类型
+            var dynamicHeadTypeInfo = dynamicHeadHandler.GetDynamicHeadInfoByModel(typeof(T));
+            if (dynamicHeadTypeInfo is null)
+            {
+                //无动态表头，直接不用处理
+                return;
+            }
+
+            //动态表头数据
+            var dynamicHeadDataInfos = dynamicHeadHandler.DataHandler(dynamicHeadTypeInfo, entityList);
+
+            //动态表头长度
+            var dynamicHeadCount = dynamicHeadDataInfos.Count();
+
+            // 写入表头
+            IRow headerRow = sheet.GetRow(0);
+           var currentHeaderLastCellNum = headerRow.LastCellNum;
+            for (int j = 0; j < dynamicHeadCount; j++)
+            {
+                headerRow.CreateCell(currentHeaderLastCellNum  + j).SetCellValue(dynamicHeadDataInfos[j].DataName);
+            }
+
+            //写入动态数据
+    
+            for (int i = 0; i < entityList.Count(); i++)
+            {
+                IRow dataRow = sheet.GetRow(i + 1);
+                var currentDataLastCellNum = dataRow.LastCellNum;
+                for (int j = 0; j < dynamicHeadCount; j++)
+                {
+                    var currentData = dynamicHeadDataInfos[j];
+                    //只处理简单类型
+                    dataRow.CreateCell(currentDataLastCellNum + j).SetCellValue(currentData.DataValue);
+                }
+            }
+        }
 
     }
 }
