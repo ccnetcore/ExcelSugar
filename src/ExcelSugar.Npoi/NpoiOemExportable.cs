@@ -97,7 +97,7 @@ namespace ExcelSugar.Npoi
                         dataRow.GetOrCreateCell(j).SetCellValue(cellStr);
                     }
                 }
-
+                HandlerForDynamicHead(entityList, sheet);
                 // 保存文件
                 using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {

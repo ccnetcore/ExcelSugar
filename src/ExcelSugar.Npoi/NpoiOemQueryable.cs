@@ -104,13 +104,20 @@ namespace ExcelSugar.Npoi
                     //不满住where条件，跳过该行
                     if (whereResult == false)
                     {
-
                         continue;
                     }
 
                     // 遍历列
                     for (int col = 0; col < currentRow.LastCellNum; col++)
                     {
+                        //如果列不在已定义中的，直接跳过即可
+                        if (!propHas.ContainsKey(col))
+                        {
+                            continue;
+                        }
+
+
+
                         // 获取单元格的值
                         ICell cell = currentRow.GetCell(col);
                         string? cellValue = cell.ToString();
