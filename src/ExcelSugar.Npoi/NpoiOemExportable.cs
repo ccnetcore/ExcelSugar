@@ -178,25 +178,45 @@ namespace ExcelSugar.Npoi
             //动态表头长度
             var dynamicHeadCount = dynamicHeadDataInfos.Count();
 
-            // 写入表头
+            //获取datacode、dataname的关系
+            var dynamicHeadCodeAndNameList = dynamicHeadDataInfos.SelectMany(x => x.Select(y => new DynamicHeadDataInfo { DataCode = y.DataCode, DataName = y.DataName })).Distinct(new DataCodeComparer()).ToList();
+            // 列数与datacode的关系
+            var dynamicHeadColAndCodeDic = new Dictionary<int, string>();
+
+
             IRow headerRow = sheet.GetRow(0);
-           var currentHeaderLastCellNum = headerRow.LastCellNum;
+            var currentHeaderLastCellNum = headerRow.LastCellNum;
             for (int j = 0; j < dynamicHeadCount; j++)
             {
-                headerRow.CreateCell(currentHeaderLastCellNum  + j).SetCellValue(dynamicHeadDataInfos[j].DataName);
+                //添加关系到字典
+                dynamicHeadColAndCodeDic.Add(currentHeaderLastCellNum + j, dynamicHeadCodeAndNameList[j].DataCode);
+                headerRow.CreateCell(currentHeaderLastCellNum + j).SetCellValue(dynamicHeadCodeAndNameList[j].DataName);
             }
 
-            //写入动态数据
-    
+            //写入动态数据，一个实体一个行
+
             for (int i = 0; i < entityList.Count(); i++)
             {
                 IRow dataRow = sheet.GetRow(i + 1);
                 var currentDataLastCellNum = dataRow.LastCellNum;
+                //当前行的数据
+                var currentRowData = dynamicHeadDataInfos[i];
                 for (int j = 0; j < dynamicHeadCount; j++)
                 {
-                    var currentData = dynamicHeadDataInfos[j];
+                    var currentCol = currentDataLastCellNum + j;
+                    //根据列找到对应的datacode
+                    var currentDataCode = dynamicHeadColAndCodeDic[currentCol];
+
+                    //当前单元格
+                    var currentDataCell = currentRowData.Where(x => x.DataCode == currentDataCode).FirstOrDefault();
+
+                    if (currentDataCell is null)
+                    {
+                        continue;
+                    }
+
                     //只处理简单类型
-                    dataRow.CreateCell(currentDataLastCellNum + j).SetCellValue(currentData.DataValue);
+                    dataRow.CreateCell(currentDataLastCellNum + j).SetCellValue(currentDataCell.DataValue);
                 }
             }
         }

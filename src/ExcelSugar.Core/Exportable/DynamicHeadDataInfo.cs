@@ -4,6 +4,16 @@ using System.Text;
 
 namespace ExcelSugar.Core.Exportable
 {
+
+    /// <summary>
+    /// 行
+    /// </summary>
+    public class DynamicHeadDataRowInfo : List<DynamicHeadDataInfo>
+    {
+
+
+    }
+
     public class DynamicHeadDataInfo
     {
         public string? DataCode { get; set; }

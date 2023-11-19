@@ -19,21 +19,24 @@ namespace ExcelSugar.Core.Exportable
         /// <param name="objs"></param>
         /// <param name="dynamicHeadPropertyInfo"></param>
         /// <returns></returns>
-        public List<DynamicHeadDataInfo> DataHandler<T>(DynamicHeadTypeInfo dynamicHeadTypeInfo, List<T> objs)
+        public List<DynamicHeadDataRowInfo> DataHandler<T>(DynamicHeadTypeInfo dynamicHeadTypeInfo, List<T> objs)
         {
-            var results = new List<DynamicHeadDataInfo>();
+            var results = new List<DynamicHeadDataRowInfo>();
 
             foreach (var obj in objs)
             {
                 var listData = dynamicHeadTypeInfo.List.GetValue(obj);
+                var rowResult = new DynamicHeadDataRowInfo();
                 foreach (var modeItem in listData as IEnumerable)
                 {
+                
                     var result = new DynamicHeadDataInfo();
                     result.DataCode = dynamicHeadTypeInfo.Code.GetValue(modeItem).ToString();
                     result.DataName = dynamicHeadTypeInfo.Name.GetValue(modeItem).ToString();
                     result.DataValue = dynamicHeadTypeInfo.Value.GetValue(modeItem).ToString();
-                    results.Add(result);
+                    rowResult.Add(result);
                 }
+                results.Add(rowResult);
             }
             return results;
         }
