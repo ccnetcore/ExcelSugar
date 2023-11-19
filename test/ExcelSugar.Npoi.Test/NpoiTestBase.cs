@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +13,14 @@ namespace ExcelSugar.Npoi.Test
         protected IExcelSugarClient CreateClient()
         {
             //创建客户端
-            IExcelSugarClient excelSugarClient = new ExcelSugarClient(new OemConfig { Path = "../../../TempExcel/Test.xlsx", HandlerType = ExcelHandlerType.Npoi });
+            IExcelSugarClient excelSugarClient = new ExcelSugarClient(new ExcelSugarConfig { Path = "../../../TempExcel/Test.xlsx", HandlerType = ExcelHandlerType.Npoi });
             //支持动态列模型
             return excelSugarClient;
+        }
+
+        protected List<TestModel> CreateNullTestModel()
+        {
+            return new List<TestModel>();
         }
 
         protected List<TestModel> CreateTestModel()

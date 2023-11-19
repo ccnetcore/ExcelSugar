@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{90A27EE8-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelSugar.Npoi.Test", "test\ExcelSugar.Npoi.Test\ExcelSugar.Npoi.Test.csproj", "{D8DF6929-84BA-403B-ABAB-A30BE6602403}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelSugar.AspNetCore", "src\ExcelSugar.AspNetCore\ExcelSugar.AspNetCore.csproj", "{4643F228-18DF-4A8E-938F-0E26281F4874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelSugar.AspNetCore", "src\ExcelSugar.AspNetCore\ExcelSugar.AspNetCore.csproj", "{4643F228-18DF-4A8E-938F-0E26281F4874}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2042E451-BA99-488A-9C1A-17C4A7B8369D}"
 	ProjectSection(SolutionItems) = preProject
-		Builder.props = Builder.props
+		src\Builder.props = src\Builder.props
 	EndProjectSection
 EndProject
 Global

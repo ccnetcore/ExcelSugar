@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<Import Project="../Builder.props" />
 
-  <ItemGroup>
+
+	<ItemGroup>
     <ProjectReference Include="..\ExcelSugar.Core\ExcelSugar.Core.csproj" />
   </ItemGroup>
 

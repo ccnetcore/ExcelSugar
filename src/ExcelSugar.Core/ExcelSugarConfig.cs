@@ -1,6 +1,6 @@
 ﻿namespace ExcelSugar.Core
 {
-    public class OemConfig
+    public class ExcelSugarConfig
     {
         public string Path { get; set; }
 

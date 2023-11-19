@@ -5,10 +5,10 @@ using ExcelSugar.Core.Queryable;
 
 namespace ExcelSugar.Npoi
 {
-    public class NpoiOemProvider : IOemProvider
+    public class NpoiOemProvider : IExcelSugarProvider
     {
-        private OemConfig _oemConfig;
-        public NpoiOemProvider(OemConfig oemConfig)
+        private ExcelSugarConfig _oemConfig;
+        public NpoiOemProvider(ExcelSugarConfig oemConfig)
         {
             _oemConfig = oemConfig;
         }

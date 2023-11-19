@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+	  <Authors>ccnetcore</Authors>
+	  <Company>ccnetcore</Company>
+	  <PackageProjectUrl>https://gitee.com/ccnetcore/excelsugar</PackageProjectUrl>
+	  <PackageIcon>logo.jpg</PackageIcon>
+	  <RepositoryUrl>https://gitee.com/ccnetcore/excelsugar</RepositoryUrl>
+	</PropertyGroup>
+	<Import Project="../Builder.props" />
+
+
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

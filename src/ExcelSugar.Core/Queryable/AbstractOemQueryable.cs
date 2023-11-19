@@ -7,10 +7,10 @@ namespace ExcelSugar.Core.Queryable
 {
     public abstract class AbstractOemQueryable<T> : IOemQueryable<T>
     {
-        protected OemConfig _config;
+        protected ExcelSugarConfig _config;
 
         protected LinkedListBuilder<T> LinkedListBuilder { get; set; }
-        public AbstractOemQueryable(OemConfig oemConfig)
+        public AbstractOemQueryable(ExcelSugarConfig oemConfig)
         {
             _config = oemConfig;
             LinkedListBuilder = new LinkedListBuilder<T>();

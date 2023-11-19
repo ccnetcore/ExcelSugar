@@ -9,7 +9,7 @@ namespace ExcelSugar.Core
     /// <summary>
     /// 单元格值转换器
     /// </summary>
-    public class DefaultCellValueConverter: ICellValueConverter
+    public class DefaultCellValueConverter : ICellValueConverter
     {
 
         /// <summary>
@@ -20,9 +20,9 @@ namespace ExcelSugar.Core
         /// <returns></returns>
         public object? CellToProperty(string cellValue, Type propertyType)
         {
-            object value = cellValue.TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
+            string value = cellValue.TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
 
-            return Convert.ChangeType(cellValue, propertyType);
+            return Convert.ChangeType(value, propertyType);
         }
 
         /// <summary>
@@ -32,6 +32,9 @@ namespace ExcelSugar.Core
         /// <returns></returns>
         public string PropertyToCell(object? propertyValue)
         {
+            var data = propertyValue.ToString().TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
+            return data;
+
             return JsonSerializer.Serialize(propertyValue).TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
         }
     }

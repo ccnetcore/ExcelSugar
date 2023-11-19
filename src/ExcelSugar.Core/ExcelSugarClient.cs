@@ -10,15 +10,15 @@ namespace ExcelSugar.Core
     {
         private bool disposedValue;
 
-        private IOemProvider Provider { get; set; }
-        private IOemProvider Context => GetProvider();
-        private IOemProvider GetProvider()
+        private IExcelSugarProvider Provider { get; set; }
+        private IExcelSugarProvider Context => GetProvider();
+        private IExcelSugarProvider GetProvider()
         {
             return Provider;
         }
 
-        private OemConfig Config { get; }
-        public ExcelSugarClient(OemConfig config)
+        private ExcelSugarConfig Config { get; }
+        public ExcelSugarClient(ExcelSugarConfig config)
         {
             Config = config;
             Init();

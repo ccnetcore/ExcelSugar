@@ -7,21 +7,21 @@ namespace ExcelSugar.Core
 {
     public class ExcelHandlerProviderFactory
     {
-        private OemConfig Config { get; }
-        public ExcelHandlerProviderFactory(OemConfig oemConfig)
+        private ExcelSugarConfig Config { get; }
+        public ExcelHandlerProviderFactory(ExcelSugarConfig oemConfig)
         {
             this.Config = oemConfig;
         }
 
-        public IOemProvider CreateOemProvider()
+        public IExcelSugarProvider CreateOemProvider()
         {
-            IOemProvider result = default(IOemProvider);
+            IExcelSugarProvider result = default(IExcelSugarProvider);
             switch (Config.HandlerType)
             {
                 case ExcelHandlerType.Npoi:
                     var targetType = Assembly.Load("ExcelSugar.Npoi").GetType("ExcelSugar.Npoi.NpoiOemProvider");
                     object instance = Activator.CreateInstance(targetType, new object[] { Config });
-                    result = instance as IOemProvider;
+                    result = instance as IExcelSugarProvider;
                     break;
                 default:
                     break;

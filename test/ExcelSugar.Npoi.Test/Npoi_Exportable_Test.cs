@@ -28,6 +28,21 @@ namespace ExcelSugar.Npoi.Test
             Assert.True(true);
         }
 
+
+        /// <summary>
+        /// 空测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Exportable_Null_Test()
+        {
+            var client = CreateClient();
+            var testModel = CreateNullTestModel();
+            await client.Exportable(testModel).ExecuteCommandAsync();
+            client.Dispose();
+            Assert.True(true);
+        }
+   
         /// <summary>
         /// 根据提供的模板进行导出创建的模型
         /// </summary>
@@ -42,6 +57,22 @@ namespace ExcelSugar.Npoi.Test
             client.Dispose();
             Assert.True(true);
         }
+
+        /// <summary>
+        /// 空测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Exportable_From_Null_Test()
+        {
+            var client = CreateClient();
+            var testModel = CreateNullTestModel();
+            await client.Exportable(testModel).From("../../../TempExcel/Template.xlsx").ExecuteCommandAsync();
+            //Or await client.Exportable("../../../Test.xlsx").ExecuteCommandAsync();
+            client.Dispose();
+            Assert.True(true);
+        }
+
 
         /// <summary>
         /// 直接导出模板

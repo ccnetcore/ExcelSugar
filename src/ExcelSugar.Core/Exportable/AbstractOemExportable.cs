@@ -8,10 +8,10 @@ namespace ExcelSugar.Core
 {
     public abstract class AbstractOemExportable<T> : IOemExportable<T>
     {
-        protected OemConfig _config;
+        protected ExcelSugarConfig _config;
         protected IEnumerable<T> _expObjs;
         protected LinkedListBuilder<T> LinkedListBuilder { get; set; }
-        public AbstractOemExportable(OemConfig oemConfig, IEnumerable<T>? expObj)
+        public AbstractOemExportable(ExcelSugarConfig oemConfig, IEnumerable<T>? expObj)
         {
             _config = oemConfig;
             _expObjs = expObj;

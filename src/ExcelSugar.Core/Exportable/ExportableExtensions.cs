@@ -6,12 +6,12 @@ namespace ExcelSugar.Core.Exportable
 {
     public static class ExportableExtensions
     {
-        public static IOemExportable<OemConfig> Exportable(this IExcelSugarClient excelSugarClient)
+        public static IOemExportable<ExcelSugarConfig> Exportable(this IExcelSugarClient excelSugarClient)
         {
-            return excelSugarClient.Exportable<OemConfig>(null);
+            return excelSugarClient.Exportable<ExcelSugarConfig>(null);
         }
 
-        public static IOemExportable<OemConfig> Exportable(this IExcelSugarClient excelSugarClient,string fromPath)
+        public static IOemExportable<ExcelSugarConfig> Exportable(this IExcelSugarClient excelSugarClient,string fromPath)
         {
             return excelSugarClient.Exportable().From(fromPath);
         }

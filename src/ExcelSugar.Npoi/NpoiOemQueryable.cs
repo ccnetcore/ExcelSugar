@@ -17,7 +17,7 @@ namespace ExcelSugar.Npoi
     public class NpoiOemQueryable<T> : AbstractOemQueryable<T>
     {
 
-        public NpoiOemQueryable(OemConfig oemConfig) : base(oemConfig)
+        public NpoiOemQueryable(ExcelSugarConfig oemConfig) : base(oemConfig)
         {
         }
 
@@ -76,7 +76,8 @@ namespace ExcelSugar.Npoi
                     var currentResult = ReflectionExtensions.CreateInstance<T>();
 
                     var whereResult = true;
-                    //先去判断表达式，该行是否成立
+
+                    //处理where表达式，该行是否成立
                     foreach (var whereExp in base.LinkedListBuilder.WhereContainer)
                     {
                         var expression = (MemberExpression)((BinaryExpression)whereExp.Value.Body).Left;
@@ -115,8 +116,6 @@ namespace ExcelSugar.Npoi
                         {
                             continue;
                         }
-
-
 
                         // 获取单元格的值
                         ICell cell = currentRow.GetCell(col);

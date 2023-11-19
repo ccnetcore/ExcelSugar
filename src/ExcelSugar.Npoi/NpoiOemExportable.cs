@@ -16,7 +16,7 @@ namespace ExcelSugar.Npoi
 {
     public class NpoiOemExportable<T> : AbstractOemExportable<T>
     {
-        public NpoiOemExportable(OemConfig oemConfig, IEnumerable<T>? expObj) : base(oemConfig, expObj)
+        public NpoiOemExportable(ExcelSugarConfig oemConfig, IEnumerable<T>? expObj) : base(oemConfig, expObj)
         {
             _config = oemConfig;
             _expObjs = expObj;
