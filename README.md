@@ -74,6 +74,17 @@ IExcelSugarClient excelSugarClient = new ExcelSugarClient(new ExcelSugarConfig {
 ```
 3. 使用client操作即可
 ``` cs
+//创建实体
+var testModel = new List<TestModel> {
+	new TestModel { Description = "男的", Name = "张三", DynamicModels=new List<DynamicModel>{
+		new DynamicModel { DataCode="height",DataName="身高",DataValue=188},
+	} },
+	new TestModel { Description = "女的", Name = "李四" ,DynamicModels=new List<DynamicModel>{
+		new DynamicModel { DataCode="height",DataName="身高",DataValue=168},
+		new DynamicModel { DataCode="age",DataName="年龄",DataValue=18},
+	} }
+};
+
 //从excel中查询出实体
 var data = await client.Queryable<TestModel>().ToListAsync();
 
