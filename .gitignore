@@ -3,7 +3,7 @@ x64
 x86
 bin
 /Nupkgs
-/.vs
+.vs
 /packages
 /Publish
 /Dotfuscated

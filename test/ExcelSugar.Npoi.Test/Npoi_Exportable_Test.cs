@@ -5,10 +5,10 @@ using Xunit.Abstractions;
 
 namespace ExcelSugar.Npoi.Test
 {
-    public class Npoi_Queryable_Test : NpoiTestBase
+    public class Npoi_Exportable_Test : NpoiTestBase
     {
         private ITestOutputHelper _output;
-        public Npoi_Queryable_Test(ITestOutputHelper output)
+        public Npoi_Exportable_Test(ITestOutputHelper output)
         {
             _output = output;
 
