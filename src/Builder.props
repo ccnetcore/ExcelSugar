@@ -6,8 +6,8 @@
 		<PackageProjectUrl>https://gitee.com/ccnetcore/excelsugar</PackageProjectUrl>
 		<PackageIcon>logo.jpg</PackageIcon>
 		<RepositoryUrl>https://gitee.com/ccnetcore/excelsugar</RepositoryUrl>
-		<AssemblyVersion>1.0.1</AssemblyVersion>
-		<Version>1.0.1</Version>
+		<AssemblyVersion>1.0.2</AssemblyVersion>
+		<Version>1.0.2</Version>
 		<Description>
 			ORM To Excel,像操作对象一样操作Excel，支持查询、导出、模板等常用功能;
 			使用方式类比于SqlsugarORM，优雅简单，excel快速上手的不二之选;

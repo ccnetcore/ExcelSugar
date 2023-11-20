@@ -31,9 +31,9 @@ namespace ExcelSugar.Core.Exportable
                 {
 
                     var result = new DynamicHeadDataInfo();
-                    result.DataCode = dynamicHeadTypeInfo.Code.GetValue(modeItem).ToString();
-                    result.DataName = dynamicHeadTypeInfo.Name.GetValue(modeItem).ToString();
-                    result.DataValue = dynamicHeadTypeInfo.Value.GetValue(modeItem).ToString();
+                    result.DataCode = dynamicHeadTypeInfo.Code.GetValue(modeItem)?.ToString();
+                    result.DataName = dynamicHeadTypeInfo.Name.GetValue(modeItem)?.ToString();
+                    result.DataValue = dynamicHeadTypeInfo.Value.GetValue(modeItem)?.ToString();
                     rowResult.Add(result);
                 }
 

@@ -20,9 +20,14 @@ namespace ExcelSugar.Core
         /// <returns></returns>
         public object? CellToProperty(string cellValue, Type propertyType)
         {
-            string value = cellValue.TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
+            object? data = null;
+            if (!string.IsNullOrEmpty(cellValue))
+            {
+                string value = cellValue.TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
 
-            return Convert.ChangeType(value, propertyType);
+                data = Convert.ChangeType(value, propertyType);
+            }
+            return data;
         }
 
         /// <summary>
@@ -32,7 +37,11 @@ namespace ExcelSugar.Core
         /// <returns></returns>
         public string PropertyToCell(object? propertyValue)
         {
-            var data = propertyValue.ToString().TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
+            var data = "";
+            if (propertyValue is not null)
+            {
+                data = propertyValue.ToString().TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
+            }
             return data;
 
             return JsonSerializer.Serialize(propertyValue).TrimStart("\"".ToCharArray()).TrimEnd("\"".ToCharArray());
