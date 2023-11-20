@@ -1,6 +1,8 @@
-#### ExcelSugar 介绍
+<h4 align="center">一套以用户体验出发的.netstandard2.1 Excel开源工具包</h4>
+<h5 align="center">支持查询、导出、模板等常用功能,语法与Sqlsugar类似</h5>
+<h2 align="center">Excel快速上手的不二之选</h2>
 
-`基于.netstandard2.1 excle工具包`
+#### ExcelSugar 介绍
 
 ORM To Excel,像操作对象一样操作Excel，支持查询、导出、模板等常用功能;
 
@@ -11,14 +13,14 @@ ORM To Excel,像操作对象一样操作Excel，支持查询、导出、模板�
 > 正在持续迭代中，支持的功能会越来越多~~！
 #### 优势
 
-1. [x] 将Excel当作对象操作，使用简单，1分钟上手
-2. [x] 语法与SqlsugarORM基本类似，两者都可以兼得
-3. [x] 支持where表达式查询
-4. [x] 支持来自模板导出
-5. [x] 支持动态表头功能
-6. [x] 支持单元格存储对象
-7. [x] 完善的单元测试，可以查看详细使用操作
-8. [x] 作者24小时在线，可QQ联系：454313500
+1. [x] 将Excel当作`对象`操作，使用简单，1分钟上手
+2. [x] 语法与`SqlsugarORM`基本类似，两者都可以兼得
+3. [x] 支持`where`表达式查询
+4. [x] 支持来自`模板`导出
+5. [x] 支持`动态表头`功能
+6. [x] 支持单元格存储`对象`
+7. [x] 完善的`单元测试`，可以查看详细使用操作
+8. [x] 作者`24`小时在线，可QQ联系：454313500
 
 #### 安装教程
 
@@ -86,3 +88,13 @@ await client.Exportable(testModel).From("../../../TempExcel/Template.xlsx").Exec
 //Or await client.Exportable("../../../Test.xlsx").ExecuteCommandAsync();
 
 ```
+
+#### 致谢
+
+- [Sqlsugar老杰哥] https://www.donet5.com/Home/Doc
+
+
+#### 联系我们
+
+- 可通过QQ进行联系：454313500
+- 可通过本仓库进行联系
